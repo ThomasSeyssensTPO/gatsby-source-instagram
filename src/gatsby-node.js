@@ -52,7 +52,7 @@ function createPostNode(datum, params) {
       params.type === `hashtag`
         ? params.hashtag
         : datum.username || datum.owner.username || datum.owner.id,
-    id: datum.shortcode,
+    id: datum.id,
     parent: `__SOURCE__`,
     internal: {
       type: `InstaNode`,
