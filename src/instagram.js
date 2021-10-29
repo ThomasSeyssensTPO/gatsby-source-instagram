@@ -2,6 +2,8 @@
 const axios = require(`axios`)
 
 export async function refreshToken(token) {
+  console.log("🚀 ~ file: instagram.js ~ line 5 ~ refreshToken ~ token", token)
+  console.log(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`)
   return axios
     .get(
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
