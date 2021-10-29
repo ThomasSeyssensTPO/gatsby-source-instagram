@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const axios = require(`axios`)
 
-export async function refreshToken({ token }) {
+export async function refreshToken(token) {
   return axios
     .get(
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
