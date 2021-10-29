@@ -8,6 +8,7 @@ const {
   apiInstagramHashtags,
   scrapingInstagramHashtags,
   scrapingInstagramUser,
+  refreshToken,
 } = require(`./instagram`)
 
 const defaultOptions = {
@@ -123,6 +124,8 @@ exports.sourceNodes = async (
   const { createNode, touchNode } = actions
   const params = { ...defaultOptions, ...options }
   let data
+  
+  await refreshToken(params.access_token);
 
   if (params.type === `account`) {
     data = await getInstagramPosts(params)

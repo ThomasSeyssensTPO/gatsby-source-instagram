@@ -1,6 +1,18 @@
 /* eslint-disable camelcase */
 const axios = require(`axios`)
 
+export async function refreshToken({ token }) {
+  return axios.get(`https://graph.instagram.com/refresh_access_token
+  ?grant_type=ig_refresh_token
+  &access_token=${token}`).then((response) => {
+    return response;
+  })
+  .catch((err) => {
+    console.warn(`Could not refresh the token. Error status ${err}`);
+    return null
+  })
+}
+
 export async function scrapingInstagramPosts({ username }) {
   return axios
     .get(
