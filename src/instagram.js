@@ -8,12 +8,7 @@ export async function refreshToken(token) {
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
     )
     .then((response) => {
-      process.env[INSTAGRAM_ACCESS_TOKEN] = response.data.access_token
-      console.info(
-        "🚀 ~ file: instagram.js ~ line 16 ~ returnaxios.get ~ response.data.access_token",
-        response.data.access_token
-      )
-
+      process.env["INSTAGRAM_ACCESS_TOKEN"] = response.data.access_token
       return response
     })
     .catch((err) => {
