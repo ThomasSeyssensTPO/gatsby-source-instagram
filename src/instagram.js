@@ -2,19 +2,17 @@
 const axios = require(`axios`)
 
 export async function refreshToken(token) {
-  console.info("🚀 ~ file: instagram.js ~ line 5 ~ refreshToken ~ token", token)
-  console.info(
-    `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
-  )
   return axios
     .get(
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
     )
     .then((response) => {
-      console.log(
-        "🚀 ~ file: instagram.js ~ line 14 ~ .then ~ response",
-        response.data
+      process.env[INSTAGRAM_ACCESS_TOKEN] = response.data.access_token
+      console.info(
+        "🚀 ~ file: instagram.js ~ line 16 ~ returnaxios.get ~ response.data.access_token",
+        response.data.access_token
       )
+
       return response
     })
     .catch((err) => {
