@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const axios = require(`axios`)
+require("dotenv").config()
 
 export async function refreshToken(token) {
   return axios
