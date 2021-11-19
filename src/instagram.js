@@ -11,6 +11,10 @@ export async function refreshToken(token) {
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
     )
     .then((response) => {
+      console.log(
+        "🚀 ~ file: instagram.js ~ line 14 ~ .then ~ response",
+        response.data
+      )
       return response
     })
     .catch((err) => {
