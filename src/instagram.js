@@ -8,8 +8,8 @@ export async function refreshToken(token) {
       `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`
     )
     .then((response) => {
-      process.env["INSTAGRAM_ACCESS_TOKEN"] = response.data.access_token
-      return response
+      console.info("Token is refreshed.")
+      return true
     })
     .catch((err) => {
       console.warn(`Could not refresh the token. Error status ${err}`)
