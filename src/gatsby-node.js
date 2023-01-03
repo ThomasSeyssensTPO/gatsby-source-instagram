@@ -117,30 +117,38 @@ function processDatum(datum, params) {
   return node
 }
 
-exports.sourceNodes = async (
-  { actions, store, cache, createNodeId },
-  options
-) => {
-  const { createNode, touchNode } = actions
-  const params = { ...defaultOptions, ...options }
-  let data
-  
-  await refreshToken(params.access_token);
+exports.sourceNodes = async ({
+  actions,
+  store,
+  cache,
+  createNodeId,
+  getNode
+}, options) => {
+  const {
+    createNode,
+    touchNode  
+  } = actions;
+  const params = { ...defaultOptions,
+    ...options
+  };
+  let data;
 
-  if (params.type === `account`) {
-    data = await getInstagramPosts(params)
-  } else if (params.type === `hashtag`) {
-    data = await getInstagramHashtags(params)
-  } else if (params.type === `user-profile`) {
-    data = await getInstagramUser(params)
-  } else {
-    console.warn(`Unknown type for gatsby-source-instagram: ${params.type}`)
-  }
-  
-  // Process data into nodes.
+    await refreshToken(params.access_token);
+
+    if (params.type === `account`) {
+      data = await getInstagramPosts(params);
+    } else if (params.type === `hashtag`) {
+      data = await getInstagramHashtags(params);
+    } else if (params.type === `user-profile`) {
+      data = await getInstagramUser(params);
+    } else {
+      console.warn(`Unknown type for gatsby-source-instagram: ${params.type}`);
+    } // Process data into nodes.
+
+
   if (data) {
-    return Promise.all(
-      data.map(async (datum) => {
+    return Promise.all(data.map(async datum => {
+     
         const res = await normalize.downloadMediaFile({
           datum: processDatum(datum, params),
           store,
@@ -148,9 +156,10 @@ exports.sourceNodes = async (
           createNode,
           createNodeId,
           touchNode,
-        })
-        createNode(res)
-      })
-    )
+          getNode
+        });
+        createNode(res);
+  
+    }));
   }
-}
+};
