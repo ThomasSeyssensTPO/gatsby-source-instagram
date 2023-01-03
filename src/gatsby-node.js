@@ -121,18 +121,18 @@ exports.sourceNodes = async ({
   actions,
   store,
   cache,
-  createNodeId
+  createNodeId,
+  getNode
 }, options) => {
   const {
     createNode,
-    touchNode
+    touchNode  
   } = actions;
   const params = { ...defaultOptions,
     ...options
   };
   let data;
 
-  try {
     await refreshToken(params.access_token);
 
     if (params.type === `account`) {
@@ -143,28 +143,23 @@ exports.sourceNodes = async ({
       data = await getInstagramUser(params);
     } else {
       console.warn(`Unknown type for gatsby-source-instagram: ${params.type}`);
-    }
-  } catch (error) {
-    console.error(error);
-  } // Process data into nodes.
+    } // Process data into nodes.
 
 
   if (data) {
     return Promise.all(data.map(async datum => {
-      if(!params.type) return;
-      try {
+     
         const res = await normalize.downloadMediaFile({
           datum: processDatum(datum, params),
           store,
           cache,
           createNode,
           createNodeId,
-          touchNode
+          touchNode,
+          getNode
         });
         createNode(res);
-      } catch (error) {
-        console.error(error);
-      }
+  
     }));
   }
 };
